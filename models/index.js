@@ -1,8 +1,9 @@
-const Model1 = reqiure('./Model1');
-const Model2 = reqiure('./Model2');
+const User = reqiure('./User');
+const Post = reqiure('./Post');
+const Comment = reqiure('./Comment');
 
 
 
 
 
-module.exports = {Model1, Model2};
+module.exports = {User, Post, Comment};
