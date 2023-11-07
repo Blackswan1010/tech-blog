@@ -18,13 +18,25 @@ Comment.init(
                 len: [1],
             },
         },
-        user_id: {
+
+        creation_date: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+        },
+
+        update_date: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+        },
+
+        author_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'user',
                 key: 'id',
             },
         },
+
         post_id: {
             type: DataTypes.INTEGER,
             references: {

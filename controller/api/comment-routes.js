@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
 
-router.get("/", async (req, res) => {
+// Getting all comments for a post
+router.get("/:id", async (req, res) => {
     try {
         const commentData = await Comment.findAll({
             include: [{ model: User }, { model: Post }],
@@ -13,31 +14,14 @@ router.get("/", async (req, res) => {
         } else {
             res.status(404).json('Comments not found!');
         }
-        
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-router.get("/:id", async (req, res) => {
-    try {
-        const commentData = await Comment.findOne({
-            include: [{ model: User }, { model: Post }],
-            where: { post_id: req.params.id }
-        });
-
-        if (commentData) {
-            res.status(200).json(commentData);
-        } else {
-            res.status(404).json('Comment not found!');
-        }
 
     } catch (err) {
         res.status(500).json(err);
     }
 });
 
-router.post("/:id", async (req, res) => {
+// Creating a comment on a post
+router.post("/", async (req, res) => {
     try {
         const newComment = await Comment.create({
             content_text: req.body.comment,
