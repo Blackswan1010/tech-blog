@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { post } = require('.');
 const { User, Post, Comment } = require('../../models');
 
 // Getting all posts
@@ -89,3 +88,5 @@ router.post("/:id", async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+module.exports = router;

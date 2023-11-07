@@ -15,7 +15,7 @@ const sess = {
   secret: 'Super secret secret',
   // Tells our session to use cookies
   cookie: {
-    maxAge: 360000,
+    maxAge: 3600000,
     httpOnly: false
   },
   resave: false,
