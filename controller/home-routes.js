@@ -50,7 +50,7 @@ router.get('/posts/:id', async (req, res) => {
 
         const post = postData.get({ plain: true });
 
-        res.render('project', {
+        res.render('posts', {
             ...post,
             logged_in: req.session.logged_in
         });
@@ -58,3 +58,6 @@ router.get('/posts/:id', async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+router.get('')
+module.exports = router;
