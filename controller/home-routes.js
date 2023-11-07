@@ -42,7 +42,7 @@ router.get('/posts/:id', async (req, res) => {
                     model: Comment,
                     include: {
                         model: User,
-                        attributes:['username']
+                        attributes: ['username']
                     }
                 }
             ],
@@ -59,5 +59,72 @@ router.get('/posts/:id', async (req, res) => {
     }
 });
 
-router.get('')
+
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/');
+    } else {
+        res.render('login');
+    }
+});
+
+router.get('/dashboard', async (req, res) => {
+    if (req.session.loggedIn) {
+        try {
+            const postData = await Post.findAll({
+                order: [['creation_date', 'DESC']],
+                include: [
+                    {
+                        model: User,
+                        attributes: ['username'],
+                        where: { id: req.session.user_id }
+                    },
+                ],
+            });
+
+            let posts = [];
+            for (i = 0; i < postData.length; i++) {
+                posts.push(postData[i].dataValues);
+                posts[i].username = postData[i].dataValues.user.dataValues.username;
+            };
+            res.render('dashboard', { posts, loggedIn: req.session.loggedIn });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    } else {
+        res.render('dashboard')
+    }
+});
+
+router.get('/newpost', (req, res) => {
+    res.render('newpost', { loggedIn: req.session.loggedIn });
+});
+
+// Get a single post with comment for the post detail page
+router.get('/edit/:id', async (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/');
+  } else {
+    try {
+      const dbPostData = await Post.findByPk(req.params.id);
+      // Double check if the login user is the auther of the post
+      if (req.session.user_id = dbPostData.dataValues.author_id) {
+        const post = {
+          title: dbPostData.dataValues.title,
+          content: dbPostData.dataValues.content,
+          creation_date: dbPostData.dataValues.creation_date,
+        };
+        res.render('edit', { post ,  loggedIn: req.session.loggedIn });
+      } else {
+        res.redirect('/');
+      };
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  }
+});
+
+
 module.exports = router;
