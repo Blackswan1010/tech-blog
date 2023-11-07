@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const routes = require('./controllers');
@@ -13,7 +14,10 @@ const PORT = process.env.PORT || 3001;
 const sess = {
   secret: 'Super secret secret',
   // Tells our session to use cookies
-  cookie: {},
+  cookie: {
+    maxAge: 360000,
+    httpOnly: false
+  },
   resave: false,
   saveUninitialized: true,
   // Sets up session store
@@ -24,14 +28,13 @@ const sess = {
 
 app.use(session(sess));
 
-
-
 // Set Handlebars as the default template engine.
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Sets up the routes
 app.use(routes);
