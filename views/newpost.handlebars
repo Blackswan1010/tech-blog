@@ -1,0 +1,15 @@
+<div class = 'post'>
+    {{#if loggedIn}}
+    <section class="card">
+        <form class="add-post">
+        <input class='new-post-title' type="text" value="Blog title"> <br>
+        <textarea class='new-post-content' type="text">Blog body</textarea>
+        <button id="submit-new-post" class="btn-style">POST</button>
+        </form>
+    </section>
+    {{else}}
+    <p><a href="/login">Login</a> to make a new post</p>
+    {{/if}}
+</div>
+
+<script src="../js/newpost.js"></script>
