@@ -117,13 +117,13 @@ router.get('/edit/:id', async (req, res) => {
     res.redirect('/');
   } else {
     try {
-      const dbPostData = await Post.findByPk(req.params.id);
+      const postData = await Post.findByPk(req.params.id);
       // Double check if the login user is the auther of the post
-      if (req.session.user_id = dbPostData.dataValues.author_id) {
+      if (req.session.user_id = postData.dataValues.author_id) {
         const post = {
-          title: dbPostData.dataValues.title,
-          content: dbPostData.dataValues.content,
-          creation_date: dbPostData.dataValues.creation_date,
+          title: postData.dataValues.title,
+          content: postData.dataValues.content,
+          creation_date: postData.dataValues.creation_date,
         };
         res.render('edit', { post ,  loggedIn: req.session.loggedIn });
       } else {

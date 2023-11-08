@@ -13,7 +13,7 @@ const loginFormHandler = async (event) => {
     if (response.ok) {
       // reload the page to generate the content shown for the user after logging in
       document.location.replace('/');
-      alert('successfully logged in!');
+      alert('Successfully logged in!');
     } else {
       alert('Incorrect email or password. Please try again!');
     }
