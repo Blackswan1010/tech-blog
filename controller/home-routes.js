@@ -51,7 +51,7 @@ router.get('/posts/:id', async (req, res) => {
         const post = postData.get({ plain: true });
 
         res.render('posts', {
-            ...post,
+            post,
             logged_in: req.session.logged_in
         });
     } catch (err) {
@@ -67,6 +67,16 @@ router.get('/login', (req, res) => {
         res.render('login');
     }
 });
+
+
+router.get('/signup', (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect('/');
+    } else {
+      res.render('signup');
+    }
+  });
+  
 
 router.get('/dashboard', async (req, res) => {
     if (req.session.loggedIn) {

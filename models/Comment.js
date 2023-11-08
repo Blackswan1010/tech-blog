@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Comment extends Model { }
+class Comment extends Model {}
 
 Comment.init(
     {
@@ -12,7 +12,7 @@ Comment.init(
             autoIncrement: true,
         },
 
-        comment_text: {
+        content: {
             type: DataTypes.STRING,
             validate: {
                 len: [1],
@@ -20,11 +20,6 @@ Comment.init(
         },
 
         creation_date: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-        },
-
-        update_date: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
         },
